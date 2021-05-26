@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadMeme() {
+
         RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }, error -> Log.d("Error",error.toString()));
+
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }
 }
