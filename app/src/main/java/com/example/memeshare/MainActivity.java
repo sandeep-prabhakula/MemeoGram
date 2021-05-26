@@ -9,12 +9,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.android.volley.NetworkError;
 import com.android.volley.Request;
-import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
@@ -52,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void loadMeme() {
         pb.setVisibility(View.VISIBLE);
-        RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
                 current = response.getString("url");
@@ -72,7 +73,12 @@ public class MainActivity extends AppCompatActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> Log.d("Error",error.toString()));
+        }, error -> {
+            Log.d("Error",error.toString());
+            if(error instanceof NetworkError){
+                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
     }

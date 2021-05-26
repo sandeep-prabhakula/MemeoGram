@@ -3,4 +3,5 @@
     <string name="nextButton">Next</string>
     <string name="shareButton">Share</string>
     <string name="meme">MEME</string>
+    <string name="memeogram">Memeogram</string>
 </resources>
