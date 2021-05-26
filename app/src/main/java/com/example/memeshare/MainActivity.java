@@ -1,18 +1,26 @@
 package com.example.memeshare;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.GlideException;
+import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.target.Target;
 
 import org.json.JSONException;
 
@@ -21,6 +29,8 @@ public class MainActivity extends AppCompatActivity {
     private Button next;
     private String meme_url = "https://meme-api.herokuapp.com/gimme";
     private String current = "";
+    private ProgressBar pb;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         meme = findViewById(R.id.meme);
         Button share = findViewById(R.id.share);
         next = findViewById(R.id.next);
+        pb = findViewById(R.id.progressBar);
+
         loadMeme();
         next.setOnClickListener(v -> loadMeme());
         share.setOnClickListener(v -> {
@@ -39,12 +51,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void loadMeme() {
-
+        pb.setVisibility(View.VISIBLE);
         RequestQueue queue = MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
                 current = response.getString("url");
-                Glide.with(getApplicationContext()).load(Uri.parse(current)).into(meme);
+                Glide.with(getApplicationContext()).load(Uri.parse(current)).listener(new RequestListener<Drawable>() {
+                    @Override
+                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
+                        pb.setVisibility(View.GONE);
+                        return false;
+                    }
+
+                    @Override
+                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
+                        pb.setVisibility(View.GONE);
+                        return false;
+                    }
+                }).into(meme);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
