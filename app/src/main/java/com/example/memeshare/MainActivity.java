@@ -12,6 +12,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.NetworkError;
@@ -76,7 +77,13 @@ public class MainActivity extends AppCompatActivity {
         }, error -> {
             Log.d("Error",error.toString());
             if(error instanceof NetworkError){
-                Toast.makeText(this, "No Internet Connection", Toast.LENGTH_SHORT).show();
+                        new AlertDialog.Builder(this)
+                        .setIcon(R.drawable.ic_baseline_error_24)
+                        .setTitle("No Internet Connection")
+                        .setMessage("please check your internet connection or make your wifi toggle switch on.")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, which) -> onBackPressed())
+                        .show();
             }
         });
 
