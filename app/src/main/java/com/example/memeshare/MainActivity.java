@@ -1,92 +1,79 @@
 package com.example.memeshare;
 
-import android.content.Intent;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.DataSource;
-import com.bumptech.glide.load.engine.GlideException;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
+import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView meme;
-    private Button next;
-    private String meme_url = "https://meme-api.herokuapp.com/gimme";
-    private String current = "";
-    private ProgressBar pb;
-
+    private final String meme_url = "https://meme-api.herokuapp.com/gimme/50";
+    RecyclerView memes;
+    MemeAdapter adapter;
+    List<MemeModel> list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        meme = findViewById(R.id.meme);
-        Button share = findViewById(R.id.share);
-        next = findViewById(R.id.next);
-        pb = findViewById(R.id.progressBar);
-
+        memes = findViewById(R.id.memes);
+        list = new ArrayList<>();
         loadMeme();
-        next.setOnClickListener(v -> loadMeme());
-        share.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");
-            i.putExtra(Intent.EXTRA_TEXT,"checkout the meme"+"\n"+current);
-            startActivity(Intent.createChooser(i,"choose an app"));
-        });
+        memes.addItemDecoration(new DividerItemDecoration(memes.getContext(),DividerItemDecoration.VERTICAL));
+        memes.setHasFixedSize(true);
+        memes.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new MemeAdapter(list);
+        adapter.notifyDataSetChanged();
     }
 
     private void loadMeme() {
-        pb.setVisibility(View.VISIBLE);
-        MySingleton.getInstance(this.getApplicationContext()).getRequestQueue();
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Loading...");
+        pd.show();
+        RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
-                current = response.getString("url");
-                Glide.with(getApplicationContext()).load(Uri.parse(current)).listener(new RequestListener<Drawable>() {
-                    @Override
-                    public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-                        pb.setVisibility(View.GONE);
-                        return false;
-                    }
-
-                    @Override
-                    public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-                        pb.setVisibility(View.GONE);
-                        return false;
-                    }
-                }).into(meme);
+                pd.dismiss();
+                JSONArray jsonArray = response.getJSONArray("memes");
+                for(int i=0;i<jsonArray.length();i++){
+                    JSONObject obj = jsonArray.getJSONObject(i);
+                    list.add(new MemeModel(obj.getString("url"),obj.getString("title")));
+                }
+                memes.setAdapter(adapter);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
+
         }, error -> {
-            Log.d("Error",error.toString());
+            pd.dismiss();
             if(error instanceof NetworkError){
-                        new AlertDialog.Builder(this)
-                        .setIcon(R.drawable.ic_baseline_error_24)
-                        .setTitle("No Internet Connection")
-                        .setMessage("please check your internet connection or make your wifi toggle switch on.")
-                        .setCancelable(false)
-                        .setPositiveButton("OK", (dialog, which) -> onBackPressed())
-                        .show();
+                new AlertDialog.Builder(this)
+                .setIcon(R.drawable.ic_baseline_error_24)
+                .setTitle("No Internet Connection")
+                .setCancelable(false)
+                .setPositiveButton("OK", (dialog, which) -> onBackPressed())
+                .setMessage("please check your internet connection or make your wifi toggle switch on.")
+                .show();
             }
         });
-
-        MySingleton.getInstance(this).addToRequestQueue(jsonObjectRequest);
+        rq.add(jsonObjectRequest);
     }
 }
