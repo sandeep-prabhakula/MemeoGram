@@ -54,7 +54,7 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
         }).into(holder.memeImg);
         holder.share.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme"+model.getImgurl());
+            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme\n"+model.getImgurl());
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
     }
