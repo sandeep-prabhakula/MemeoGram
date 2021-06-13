@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Memeogram</string>
-    <string name="memeogram">Memeogram</string>
+    <string name="actionBarTitle">Memeogram</string>
     <string name="memeImg">meme</string>
     <string name="share">Share</string>
+    <string name="reload">RELOAD</string>
+    <string name="memeogram">Memeogram</string>
 </resources>
