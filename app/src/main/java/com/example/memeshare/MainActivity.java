@@ -2,14 +2,11 @@ package com.example.memeshare;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,23 +23,32 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private final String meme_url = "https://meme-api.herokuapp.com/gimme/50";
     RecyclerView memes;
     MemeAdapter adapter;
     List<MemeModel> list;
+    NestedScrollView nest;
+    int page = 0;
+    int limit = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Objects.requireNonNull(getSupportActionBar()).hide();
-        ImageView reload = findViewById(R.id.reload);
-        reload.setOnClickListener(v -> recreate());
+//        Objects.requireNonNull(getSupportActionBar()).hide();
+//        ImageView reload = findViewById(R.id.reload);
+//        reload.setOnClickListener(v -> recreate());
+        nest = findViewById(R.id.nested);
         memes = findViewById(R.id.memes);
         list = new ArrayList<>();
-        loadMeme();
+        loadMeme(page,limit);
+        nest.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
+            if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
+                page++;
+                loadMeme(page,limit);
+            }
+        });
         memes.addItemDecoration(new DividerItemDecoration(memes.getContext(),DividerItemDecoration.VERTICAL));
         memes.setHasFixedSize(true);
         memes.setLayoutManager(new LinearLayoutManager(this));
@@ -50,7 +56,11 @@ public class MainActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    private void loadMeme() {
+    private void loadMeme(int page,int limit) {
+        if (page > limit) {
+            Toast.makeText(this, "That's all the data..", Toast.LENGTH_SHORT).show();
+            return;
+        }
         ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Loading...");
         pd.show();
