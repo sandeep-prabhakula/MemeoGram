@@ -5,4 +5,8 @@
     <string name="share">Share</string>
     <string name="reload">RELOAD</string>
     <string name="memeogram">Memeogram</string>
+    <string name="saved">saved</string>
+    <string name="home">home</string>
+    <string name="savedimage">savedImage</string>
+    <string name="image">image</string>
 </resources>

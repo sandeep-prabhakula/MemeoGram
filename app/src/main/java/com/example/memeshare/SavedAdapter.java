@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,25 +19,24 @@ import com.bumptech.glide.request.target.Target;
 
 import java.util.List;
 
-public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
-    private final List<MemeModel>list;
-    public MemeAdapter(List<MemeModel> list) {
+public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> {
+    private final List<SavedMemes>list;
+    public SavedAdapter(List<SavedMemes> list) {
         this.list = list;
     }
 
     @NonNull
     @Override
-    public MemeAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public SavedAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.meme_layout,parent,false);
+                .inflate(R.layout.saved_layout,parent,false);
         return new ViewHolder(v);
     }
 
     @Override
-    public void onBindViewHolder(MemeAdapter.ViewHolder holder, int position) {
-        MemeModel model = list.get(position);
-        holder.title.setText(model.getDescription());
-        Glide.with(holder.memeImg.getContext()).load(model.getImgurl()).listener(new RequestListener<Drawable>() {
+    public void onBindViewHolder(SavedAdapter.ViewHolder holder, int position) {
+        SavedMemes model = list.get(position);
+        Glide.with(holder.memeImg.getContext()).load(model.getImageURL()).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.pb.setVisibility(View.GONE);
@@ -53,17 +51,13 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
         }).into(holder.memeImg);
         holder.share.setOnClickListener(v -> {
             Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme\n"+model.getImgurl());
+            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme\n"+model.getImageURL());
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
-
-
-
         holder.save.setOnClickListener(v -> {
             MyDbHandler dbHandler = new MyDbHandler(v.getContext());
-            SavedMemes memes = new SavedMemes();
-            memes.setImageURL(model.getImgurl());
-            dbHandler.addTodo(memes);
+            dbHandler.deleteTodo(model.getId());
+            v.getContext().startActivity(new Intent(v.getContext(),Saved.class));
         });
     }
 
@@ -71,17 +65,16 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
     public int getItemCount() {
         return list.size();
     }
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView memeImg;
         private final ImageView share;
-        private final TextView title;
         private final ProgressBar pb;
         private final ImageView save;
         public ViewHolder(View itemView) {
             super(itemView);
             memeImg = itemView.findViewById(R.id.memeImg);
             share = itemView.findViewById(R.id.share);
-            title = itemView.findViewById(R.id.meme_description);
             pb = itemView.findViewById(R.id.progressBar);
             save = itemView.findViewById(R.id.save);
         }

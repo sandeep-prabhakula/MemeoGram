@@ -2,7 +2,9 @@ package com.example.memeshare;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,14 +33,13 @@ public class MainActivity extends AppCompatActivity {
     List<MemeModel> list;
     NestedScrollView nest;
     int page = 0;
-    int limit = 10;
+    int limit = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        Objects.requireNonNull(getSupportActionBar()).hide();
-//        ImageView reload = findViewById(R.id.reload);
-//        reload.setOnClickListener(v -> recreate());
+        Button saved = findViewById(R.id.saved);
+        saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
         nest = findViewById(R.id.nested);
         memes = findViewById(R.id.memes);
         list = new ArrayList<>();
