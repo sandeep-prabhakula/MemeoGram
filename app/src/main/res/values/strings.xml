@@ -1,12 +1,9 @@
 <resources>
     <string name="app_name">Memeogram</string>
-    <string name="actionBarTitle">Memeogram</string>
-    <string name="memeImg">meme</string>
-    <string name="share">Share</string>
-    <string name="reload">RELOAD</string>
-    <string name="memeogram">Memeogram</string>
-    <string name="saved">saved</string>
-    <string name="home">home</string>
+    <string name="saved">Saved</string>
+    <string name="memeImg">memeImg</string>
+    <string name="share">share</string>
     <string name="savedimage">savedImage</string>
     <string name="image">image</string>
+    <string name="memeogram">memogram</string>
 </resources>
