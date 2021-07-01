@@ -56,15 +56,14 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
             i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme\n"+model.getImgurl());
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
-
-
-
         holder.save.setOnClickListener(v -> {
             MyDbHandler dbHandler = new MyDbHandler(v.getContext());
             SavedMemes memes = new SavedMemes();
             memes.setImageURL(model.getImgurl());
             dbHandler.addTodo(memes);
+            holder.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
         });
+
     }
 
     @Override

@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -34,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     List<MemeModel> list;
     NestedScrollView nest;
     int page = 0;
-    int limit = 0;
+    int limit = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
