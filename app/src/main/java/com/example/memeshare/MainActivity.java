@@ -25,6 +25,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
     private final String meme_url = "https://meme-api.herokuapp.com/gimme/50";
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ImageView saved = findViewById(R.id.saved);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
         nest = findViewById(R.id.nested);
         memes = findViewById(R.id.memes);
