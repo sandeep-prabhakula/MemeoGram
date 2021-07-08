@@ -66,6 +66,7 @@ public class MainActivity extends AppCompatActivity {
         }
         ProgressDialog pd = new ProgressDialog(this);
         pd.setMessage("Loading...");
+        pd.setCancelable(false);
         pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
