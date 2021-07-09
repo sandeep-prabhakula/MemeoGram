@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_margin="10dp">
 
     <androidx.core.widget.NestedScrollView
@@ -32,16 +32,6 @@
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <ImageView
-        android:id="@+id/saved"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:contentDescription="@string/saved"
-        app:layout_constraintBottom_toTopOf="@id/nested"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_baseline_bookmark_24"
-        app:tint="#0FEBBE" />
 
     <TextView
         android:id="@+id/textView2"
@@ -57,8 +47,46 @@
         android:textColor="#0FEBBE"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/nested"
-        app:layout_constraintEnd_toStartOf="@+id/saved"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nested"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="#FFFFFF">
+
+        <ImageView
+            android:id="@+id/home"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_baseline_home_24"
+            app:tint="#0FEBBE"
+            android:contentDescription="@string/homemainactivity" />
+
+        <ImageView
+            android:id="@+id/explore"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            app:srcCompat="@drawable/ic_baseline_explore_24"
+            app:tint="#0FEBBE"
+            android:contentDescription="@string/exploremainactivity" />
+
+        <ImageView
+            android:id="@+id/saved"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/saved"
+            app:srcCompat="@drawable/ic_baseline_bookmark_24"
+            app:tint="#0FEBBE" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

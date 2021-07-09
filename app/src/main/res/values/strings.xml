@@ -7,4 +7,11 @@
     <string name="image">image</string>
     <string name="memeogram">Memogram</string>
     <string name="actionBarTitle">Memeogram</string>
+    <string name="explore">Explore</string>
+    <string name="home">Home</string>
+    <string name="homemainactivity">HomeMainActivity</string>
+    <string name="exploremainactivity">ExploreMainActivity</string>
+    <string name="exploresavedactivity">ExploreSavedActivity</string>
+    <string name="homesavedactivity">HomeSavedActivity</string>
+    <string name="exploremememodel">ExploreMemeModel</string>
 </resources>

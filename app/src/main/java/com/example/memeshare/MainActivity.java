@@ -33,13 +33,17 @@ public class MainActivity extends AppCompatActivity {
     MemeAdapter adapter;
     List<MemeModel> list;
     NestedScrollView nest;
+    ImageView explore;
+    ImageView saved;
     int page = 0;
     int limit = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ImageView saved = findViewById(R.id.saved);
+        saved = findViewById(R.id.saved);
+        explore = findViewById(R.id.explore);
+        explore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Explore.class)));
         Objects.requireNonNull(getSupportActionBar()).hide();
         saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
         nest = findViewById(R.id.nested);
@@ -95,5 +99,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         rq.add(jsonObjectRequest);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent i =  new Intent(Intent.ACTION_MAIN);
+        i.addCategory(Intent.CATEGORY_HOME);
+        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(i);
     }
 }

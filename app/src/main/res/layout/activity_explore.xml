@@ -4,13 +4,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Saved">
+    android:layout_margin="10dp"
+    tools:context=".Explore">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/savedRecycler"
+    <GridView
+        android:id="@+id/exploreMemes"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
+        android:layout_height="match_parent"
+        android:numColumns="3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -18,11 +19,11 @@
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="#FFFFFF">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/home"
@@ -31,7 +32,7 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_baseline_home_24"
             app:tint="#0FEBBE"
-            android:contentDescription="@string/homesavedactivity" />
+            android:contentDescription="@string/home" />
 
         <ImageView
             android:id="@+id/explore"
@@ -40,7 +41,7 @@
             android:layout_weight="1"
             app:srcCompat="@drawable/ic_baseline_explore_24"
             app:tint="#0FEBBE"
-            android:contentDescription="@string/exploresavedactivity" />
+            android:contentDescription="@string/explore" />
 
         <ImageView
             android:id="@+id/saved"
@@ -51,5 +52,4 @@
             app:srcCompat="@drawable/ic_baseline_bookmark_24"
             app:tint="#0FEBBE" />
     </LinearLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>
