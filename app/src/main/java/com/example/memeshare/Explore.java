@@ -55,7 +55,7 @@ public class Explore extends AppCompatActivity {
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    list.add(new ExploreModel(obj.getString("url")));
+                    list.add(new ExploreModel(obj.getString("url"),obj.getString("title")));
                 }
                 exploreMemes.setAdapter(adapter);
             } catch (JSONException e) {

@@ -34,9 +34,10 @@ public class ExploreAdapter extends ArrayAdapter<ExploreModel> {
         ImageView exploreMeme = listItemView.findViewById(R.id.exploreMeme);
         ConstraintLayout singleExploreMeme = listItemView.findViewById(R.id.singleExploreMeme);
         singleExploreMeme.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme\n"+model.getImageURL());
-            v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
+            Intent i = new Intent(v.getContext(),ExploreRecycler.class);
+            i.putExtra("imageURL",model.getImageURL());
+            i.putExtra("description",model.getDescription());
+            v.getContext().startActivity(i);
         });
         Glide.with(getContext()).load(model.getImageURL()).into(exploreMeme);
         return listItemView;

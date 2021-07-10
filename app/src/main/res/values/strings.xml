@@ -14,4 +14,7 @@
     <string name="exploresavedactivity">ExploreSavedActivity</string>
     <string name="homesavedactivity">HomeSavedActivity</string>
     <string name="exploremememodel">ExploreMemeModel</string>
+    <string name="explorerecyclerhome">ExploreRecyclerHome</string>
+    <string name="explorerecyclerexplore">ExploreRecyclerExplore</string>
+    <string name="explorerecyclersaved">ExploreRecyclerSaved</string>
 </resources>

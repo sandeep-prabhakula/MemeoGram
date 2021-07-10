@@ -11,10 +11,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MemeShare">
-        <activity android:name=".Explore"
-            android:parentActivityName=".MainActivity"
+        <activity android:name=".ExploreRecycler"
+            android:parentActivityName=".Explore"
             android:label="Explore"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".Explore"
+            android:label="Explore"
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Saved"
             android:label="Saved"
