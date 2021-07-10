@@ -11,10 +11,21 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.MemeShare">
-        <activity android:name=".ExploreRecycler"
-            android:parentActivityName=".Explore"
+        <activity android:name=".ResetPassword"></activity>
+        <activity
+            android:name=".Settings"
+            android:label="Settings"
+            android:parentActivityName=".MainActivity" />
+        <activity android:name=".Login" />
+        <activity
+            android:name=".SignUp"
+            android:label="Sign Up"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".ExploreRecycler"
             android:label="Explore"
-            android:screenOrientation="portrait"/>
+            android:parentActivityName=".Explore"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Explore"
             android:label="Explore"

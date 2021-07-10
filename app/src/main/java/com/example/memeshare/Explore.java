@@ -28,6 +28,7 @@ public class Explore extends AppCompatActivity {
     private final String meme_url = "https://meme-api.herokuapp.com/gimme/1050";
     ImageView home;
     ImageView saved;
+    ImageView settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,7 +36,9 @@ public class Explore extends AppCompatActivity {
         exploreMemes = findViewById(R.id.exploreMemes);
         home = findViewById(R.id.home);
         saved = findViewById(R.id.saved);
+        settings = findViewById(R.id.settings);
         list = new ArrayList<>();
+        settings.setOnClickListener(v -> startActivity(new Intent(Explore.this,Settings.class)));
         home.setOnClickListener(v -> startActivity(new Intent(Explore.this,MainActivity.class)));
         saved.setOnClickListener(v -> startActivity(new Intent(Explore.this,Saved.class)));
         loadExploreMemes();
@@ -79,6 +82,6 @@ public class Explore extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(Explore.this,MainActivity.class));
+        super.onBackPressed();
     }
 }

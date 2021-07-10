@@ -32,6 +32,7 @@ public class ExploreRecycler extends AppCompatActivity {
     RecyclerView exploreRecycler;
     MemeAdapter adapter;
     List<MemeModel> list;
+    ImageView settings;
     NestedScrollView nested;
     int page = 0;
     int limit = 10;
@@ -42,6 +43,8 @@ public class ExploreRecycler extends AppCompatActivity {
         explorerHome = findViewById(R.id.explorerHome);
         explorerSaved = findViewById(R.id.explorerSaved);
         exploreRecycler = findViewById(R.id.exploreRecyclerView);
+        settings = findViewById(R.id.explorerSettings);
+        settings.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,Settings.class)));
         explorerHome.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,MainActivity.class)));
         explorerSaved.setOnClickListener(v->startActivity(new Intent(ExploreRecycler.this,Saved.class)));
         nested = findViewById(R.id.nested);
@@ -104,6 +107,6 @@ public class ExploreRecycler extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(ExploreRecycler.this,Explore.class));
+        super.onBackPressed();
     }
 }

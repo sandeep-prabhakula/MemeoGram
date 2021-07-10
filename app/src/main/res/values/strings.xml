@@ -17,4 +17,20 @@
     <string name="explorerecyclerhome">ExploreRecyclerHome</string>
     <string name="explorerecyclerexplore">ExploreRecyclerExplore</string>
     <string name="explorerecyclersaved">ExploreRecyclerSaved</string>
+    <string name="settings">Settings</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="signup">SignUp</string>
+    <string name="not_a_user">Not a User ?</string>
+    <string name="forgot_password">Forgot Password ?</string>
+    <string name="registered_email">Registered Email</string>
+    <string name="send_reset_link">Send Reset Link</string>
+    <string name="UserId">Email</string>
+    <string name="username">UserName</string>
+    <string name="signUpPassword">Password</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="already_a_user">Already a User ?</string>
+    <string name="loginSignUp">Login</string>
 </resources>

@@ -17,6 +17,7 @@ public class Saved extends AppCompatActivity {
     SavedAdapter adapter;
     ImageView home;
     ImageView explore;
+    ImageView settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,6 +25,8 @@ public class Saved extends AppCompatActivity {
         savedRecycler = findViewById(R.id.savedRecycler);
         home = findViewById(R.id.home);
         explore = findViewById(R.id.explore);
+        settings = findViewById(R.id.settings);
+        settings.setOnClickListener(v -> startActivity(new Intent(Saved.this,Settings.class)));
         home.setOnClickListener(v -> startActivity(new Intent(Saved.this,MainActivity.class)));
         explore.setOnClickListener(v -> startActivity(new Intent(Saved.this,Explore.class)));
         MyDbHandler dbHandler = new MyDbHandler(this);
@@ -38,6 +41,6 @@ public class Saved extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this,MainActivity.class));
+        super.onBackPressed();
     }
 }

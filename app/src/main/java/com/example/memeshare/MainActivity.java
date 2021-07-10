@@ -35,17 +35,20 @@ public class MainActivity extends AppCompatActivity {
     NestedScrollView nest;
     ImageView explore;
     ImageView saved;
+    ImageView settings;
     int page = 0;
     int limit = 10;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Objects.requireNonNull(getSupportActionBar()).hide();
         saved = findViewById(R.id.saved);
         explore = findViewById(R.id.explore);
+        settings = findViewById(R.id.settings);
         explore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Explore.class)));
-        Objects.requireNonNull(getSupportActionBar()).hide();
         saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
+        settings.setOnClickListener(v ->startActivity(new Intent(MainActivity.this,Settings.class)));
         nest = findViewById(R.id.nested);
         memes = findViewById(R.id.memes);
         list = new ArrayList<>();
