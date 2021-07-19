@@ -41,6 +41,6 @@ public class Saved extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(Saved.this,MainActivity.class));
     }
 }
