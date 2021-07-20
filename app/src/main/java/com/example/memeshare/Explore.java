@@ -4,8 +4,10 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -29,6 +31,7 @@ public class Explore extends AppCompatActivity {
     ImageView home;
     ImageView saved;
     ImageView settings;
+    ProgressBar pb5;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +40,7 @@ public class Explore extends AppCompatActivity {
         home = findViewById(R.id.home);
         saved = findViewById(R.id.saved);
         settings = findViewById(R.id.settings);
+        pb5 = findViewById(R.id.progressBar5);
         list = new ArrayList<>();
         settings.setOnClickListener(v -> startActivity(new Intent(Explore.this,Settings.class)));
         home.setOnClickListener(v -> startActivity(new Intent(Explore.this,MainActivity.class)));
@@ -47,14 +51,15 @@ public class Explore extends AppCompatActivity {
     }
 
     private void loadExploreMemes() {
-        ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Loading...");
-        pd.setCancelable(false);
-        pd.show();
+//        ProgressDialog pd = new ProgressDialog(this);
+//        pd.setMessage("Loading...");
+//        pd.setCancelable(false);
+//        pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
-                pd.dismiss();
+//                pd.dismiss();
+                pb5.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject obj = jsonArray.getJSONObject(i);
@@ -66,7 +71,8 @@ public class Explore extends AppCompatActivity {
             }
 
         }, error -> {
-            pd.dismiss();
+//            pd.dismiss();
+            pb5.setVisibility(View.GONE);
             if(error instanceof NetworkError){
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.ic_baseline_error_24)

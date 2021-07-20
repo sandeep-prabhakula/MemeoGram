@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView settings;
     int page = 0;
     int limit = 10;
+    ProgressBar pb2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
         saved = findViewById(R.id.saved);
         explore = findViewById(R.id.explore);
         settings = findViewById(R.id.settings);
+        pb2 = findViewById(R.id.progressBar2);
         explore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Explore.class)));
         saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
         settings.setOnClickListener(v ->startActivity(new Intent(MainActivity.this,Settings.class)));
@@ -71,14 +75,15 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "That's all the data..", Toast.LENGTH_SHORT).show();
             return;
         }
-        ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Loading...");
-        pd.setCancelable(false);
-        pd.show();
+//        ProgressDialog pd = new ProgressDialog(this);
+//        pd.setMessage("Loading...");
+//        pd.setCancelable(false);
+//        pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
-                pd.dismiss();
+//                pd.dismiss();
+                pb2.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject obj = jsonArray.getJSONObject(i);
@@ -90,7 +95,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }, error -> {
-            pd.dismiss();
+//            pd.dismiss();
+            pb2.setVisibility(View.GONE);
             if(error instanceof NetworkError){
                 new AlertDialog.Builder(this)
                 .setIcon(R.drawable.ic_baseline_error_24)

@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +36,7 @@ public class ExploreRecycler extends AppCompatActivity {
     List<MemeModel> list;
     ImageView settings;
     NestedScrollView nested;
+    ProgressBar pb4;
     int page = 0;
     int limit = 10;
     @Override
@@ -43,6 +46,7 @@ public class ExploreRecycler extends AppCompatActivity {
         explorerHome = findViewById(R.id.explorerHome);
         explorerSaved = findViewById(R.id.explorerSaved);
         exploreRecycler = findViewById(R.id.exploreRecyclerView);
+        pb4 = findViewById(R.id.progressBar4);
         settings = findViewById(R.id.explorerSettings);
         settings.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,Settings.class)));
         explorerHome.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,MainActivity.class)));
@@ -72,14 +76,15 @@ public class ExploreRecycler extends AppCompatActivity {
             Toast.makeText(this, "You're all caught Up", Toast.LENGTH_SHORT).show();
             return;
         }
-        ProgressDialog pd = new ProgressDialog(this);
-        pd.setMessage("Loading...");
-        pd.setCancelable(false);
-        pd.show();
+//        ProgressDialog pd = new ProgressDialog(this);
+//        pd.setMessage("Loading...");
+//        pd.setCancelable(false);
+//        pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
-                pd.dismiss();
+//                pd.dismiss();
+                pb4.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject obj = jsonArray.getJSONObject(i);
@@ -91,7 +96,8 @@ public class ExploreRecycler extends AppCompatActivity {
             }
 
         }, error -> {
-            pd.dismiss();
+//            pd.dismiss();
+            pb4.setVisibility(View.GONE);
             if(error instanceof NetworkError){
                 new AlertDialog.Builder(this)
                         .setIcon(R.drawable.ic_baseline_error_24)

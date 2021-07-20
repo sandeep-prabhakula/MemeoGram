@@ -50,36 +50,47 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:contentDescription="@string/explorerecyclerhome"
             app:srcCompat="@drawable/ic_baseline_home_24"
-            app:tint="#0FEBBE"
-            android:contentDescription="@string/explorerecyclerhome" />
+            app:tint="#0FEBBE" />
 
         <ImageView
             android:id="@+id/explorerExplore"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:contentDescription="@string/explorerecyclerexplore"
             app:srcCompat="@drawable/ic_baseline_explore_24"
-            app:tint="#0FEBBE"
-            android:contentDescription="@string/explorerecyclerexplore" />
+            app:tint="#0FEBBE" />
 
         <ImageView
             android:id="@+id/explorerSaved"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:contentDescription="@string/explorerecyclersaved"
             app:srcCompat="@drawable/ic_baseline_bookmark_24"
-            app:tint="#0FEBBE"
-            android:contentDescription="@string/explorerecyclersaved" />
+            app:tint="#0FEBBE" />
 
         <ImageView
             android:id="@+id/explorerSettings"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:contentDescription="@string/settings"
             app:srcCompat="@drawable/ic_baseline_settings_24"
-            app:tint="#0FEBBE"
-            android:contentDescription="@string/settings" />
+            app:tint="#0FEBBE" />
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar4"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

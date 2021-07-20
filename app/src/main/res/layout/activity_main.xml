@@ -47,37 +47,37 @@
         android:textColor="#0FEBBE"
         android:textSize="34sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/nested"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/nested"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:background="#FFFFFF"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="#FFFFFF">
+        app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
             android:id="@+id/home"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:contentDescription="@string/homemainactivity"
             app:srcCompat="@drawable/ic_baseline_home_24"
-            app:tint="#0FEBBE"
-            android:contentDescription="@string/homemainactivity" />
+            app:tint="#0FEBBE" />
 
         <ImageView
             android:id="@+id/explore"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:contentDescription="@string/exploremainactivity"
             app:srcCompat="@drawable/ic_baseline_explore_24"
-            app:tint="#0FEBBE"
-            android:contentDescription="@string/exploremainactivity" />
+            app:tint="#0FEBBE" />
 
         <ImageView
             android:id="@+id/saved"
@@ -93,9 +93,20 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_weight="1"
+            android:contentDescription="@string/settings"
             app:srcCompat="@drawable/ic_baseline_settings_24"
-            app:tint="#0FEBBE"
-            android:contentDescription="@string/settings" />
+            app:tint="#0FEBBE" />
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar2"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
