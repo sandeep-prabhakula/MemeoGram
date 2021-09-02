@@ -34,7 +34,7 @@ public class ExploreRecycler extends AppCompatActivity {
     RecyclerView exploreRecycler;
     MemeAdapter adapter;
     List<MemeModel> list;
-    ImageView settings;
+    ImageView settings,reels;
     NestedScrollView nested;
     ProgressBar pb4;
     int page = 0;
@@ -48,9 +48,11 @@ public class ExploreRecycler extends AppCompatActivity {
         exploreRecycler = findViewById(R.id.exploreRecyclerView);
         pb4 = findViewById(R.id.progressBar4);
         settings = findViewById(R.id.explorerSettings);
+        reels = findViewById(R.id.reels);
         settings.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,Settings.class)));
         explorerHome.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,MainActivity.class)));
         explorerSaved.setOnClickListener(v->startActivity(new Intent(ExploreRecycler.this,Saved.class)));
+        reels.setOnClickListener(v ->startActivity(new Intent(ExploreRecycler.this,ReelsActivity.class)));
         nested = findViewById(R.id.nested);
         Bundle bundle = getIntent().getExtras();
         String imageURL = bundle.getString("imageURL");

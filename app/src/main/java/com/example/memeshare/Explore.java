@@ -1,15 +1,17 @@
 package com.example.memeshare;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
@@ -22,16 +24,19 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Explore extends AppCompatActivity {
-    GridView exploreMemes;
-    ArrayList<ExploreModel> list;
+    RecyclerView exploreMemes;
+    List<ExploreModel> list;
     ExploreAdapter adapter;
     private final String meme_url = "https://meme-api.herokuapp.com/gimme/1050";
     ImageView home;
     ImageView saved;
     ImageView settings;
+    ImageView reels;
     ProgressBar pb5;
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,26 +44,25 @@ public class Explore extends AppCompatActivity {
         exploreMemes = findViewById(R.id.exploreMemes);
         home = findViewById(R.id.home);
         saved = findViewById(R.id.saved);
+        reels = findViewById(R.id.reels);
         settings = findViewById(R.id.settings);
         pb5 = findViewById(R.id.progressBar5);
         list = new ArrayList<>();
         settings.setOnClickListener(v -> startActivity(new Intent(Explore.this,Settings.class)));
         home.setOnClickListener(v -> startActivity(new Intent(Explore.this,MainActivity.class)));
         saved.setOnClickListener(v -> startActivity(new Intent(Explore.this,Saved.class)));
+        reels.setOnClickListener(v ->startActivity(new Intent(Explore.this,ReelsActivity.class)));
+        exploreMemes.setLayoutManager(new StaggeredGridLayoutManager(3,LinearLayoutManager.VERTICAL));
+        exploreMemes.setHasFixedSize(true);
         loadExploreMemes();
-        adapter = new ExploreAdapter(this,list);
+        adapter = new ExploreAdapter(list);
         adapter.notifyDataSetChanged();
     }
 
     private void loadExploreMemes() {
-//        ProgressDialog pd = new ProgressDialog(this);
-//        pd.setMessage("Loading...");
-//        pd.setCancelable(false);
-//        pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
-//                pd.dismiss();
                 pb5.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
@@ -71,7 +75,6 @@ public class Explore extends AppCompatActivity {
             }
 
         }, error -> {
-//            pd.dismiss();
             pb5.setVisibility(View.GONE);
             if(error instanceof NetworkError){
                 new AlertDialog.Builder(this)

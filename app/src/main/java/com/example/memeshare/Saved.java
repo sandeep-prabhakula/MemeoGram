@@ -18,6 +18,7 @@ public class Saved extends AppCompatActivity {
     ImageView home;
     ImageView explore;
     ImageView settings;
+    ImageView reels;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,9 +27,11 @@ public class Saved extends AppCompatActivity {
         home = findViewById(R.id.home);
         explore = findViewById(R.id.explore);
         settings = findViewById(R.id.settings);
+        reels = findViewById(R.id.reels);
         settings.setOnClickListener(v -> startActivity(new Intent(Saved.this,Settings.class)));
         home.setOnClickListener(v -> startActivity(new Intent(Saved.this,MainActivity.class)));
         explore.setOnClickListener(v -> startActivity(new Intent(Saved.this,Explore.class)));
+        reels.setOnClickListener(v ->startActivity(new Intent(Saved.this,ReelsActivity.class)));
         MyDbHandler dbHandler = new MyDbHandler(this);
         list = dbHandler.getAllTodos();
         savedRecycler.addItemDecoration(new DividerItemDecoration(savedRecycler.getContext(),DividerItemDecoration.VERTICAL));

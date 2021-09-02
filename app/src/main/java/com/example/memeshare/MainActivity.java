@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView explore;
     ImageView saved;
     ImageView settings;
+    ImageView reels;
     int page = 0;
     int limit = 10;
     ProgressBar pb2;
@@ -49,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
         saved = findViewById(R.id.saved);
         explore = findViewById(R.id.explore);
         settings = findViewById(R.id.settings);
+        reels = findViewById(R.id.reels);
         pb2 = findViewById(R.id.progressBar2);
         explore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Explore.class)));
         saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
         settings.setOnClickListener(v ->startActivity(new Intent(MainActivity.this,Settings.class)));
+        reels.setOnClickListener(v ->startActivity(new Intent(MainActivity.this,ReelsActivity.class)));
         nest = findViewById(R.id.nested);
         memes = findViewById(R.id.memes);
         list = new ArrayList<>();

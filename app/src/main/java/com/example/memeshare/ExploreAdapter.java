@@ -1,45 +1,56 @@
 package com.example.memeshare;
 
-import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class ExploreAdapter extends ArrayAdapter<ExploreModel> {
-    private final List<ExploreModel> list;
-    public ExploreAdapter (Context context, ArrayList<ExploreModel>list){
-        super(context,0,list);
+public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHolder> {
+    private List<ExploreModel> list;
+    public ExploreAdapter(List<ExploreModel> list) {
         this.list = list;
     }
 
     @NonNull
     @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.explore_layout,parent,false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExploreModel model = list.get(position);
-        View listItemView = convertView;
-        if(listItemView == null)
-            listItemView = LayoutInflater.from(getContext()).inflate(R.layout.explore_layout,parent,false);
-        ImageView exploreMeme = listItemView.findViewById(R.id.exploreMeme);
-        ConstraintLayout singleExploreMeme = listItemView.findViewById(R.id.singleExploreMeme);
-        singleExploreMeme.setOnClickListener(v -> {
+        Glide.with(holder.meme.getContext()).load(model.getImageURL()).into(holder.meme);
+        holder.singleMeme.setOnClickListener(v->{
             Intent i = new Intent(v.getContext(),ExploreRecycler.class);
             i.putExtra("imageURL",model.getImageURL());
             i.putExtra("description",model.getDescription());
             v.getContext().startActivity(i);
         });
-        Glide.with(getContext()).load(model.getImageURL()).into(exploreMeme);
-        return listItemView;
+    }
+
+    @Override
+    public int getItemCount() {
+        return list.size();
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder{
+        private final ImageView meme;
+        private final ConstraintLayout singleMeme;
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            meme = itemView.findViewById(R.id.exploreMeme);
+            singleMeme = itemView.findViewById(R.id.singleExploreMeme);
+        }
     }
 }

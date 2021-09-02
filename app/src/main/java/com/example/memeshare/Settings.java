@@ -24,9 +24,11 @@ public class Settings extends AppCompatActivity {
         ImageView home = findViewById(R.id.home);
         ImageView explore = findViewById(R.id.explore);
         ImageView saved = findViewById(R.id.saved);
+        ImageView reels = findViewById(R.id.reels);
         home.setOnClickListener(v-> startActivity(new Intent(Settings.this,MainActivity.class)));
         explore.setOnClickListener(v-> startActivity(new Intent(Settings.this,Explore.class)));
         saved.setOnClickListener(v->startActivity(new Intent(Settings.this,Saved.class)));
+        reels.setOnClickListener(v ->startActivity(new Intent(Settings.this,ReelsActivity.class)));
         list = new ArrayList<>();
         list.add(new SettingModel("Change Password"));
         list.add(new SettingModel("Logout"));
