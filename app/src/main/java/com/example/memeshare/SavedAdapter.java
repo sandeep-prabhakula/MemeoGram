@@ -1,5 +1,6 @@
 package com.example.memeshare;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
@@ -17,13 +18,11 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> {
-    private final List<SavedMemes>list;
-    public SavedAdapter(List<SavedMemes> list) {
-        this.list = list;
-    }
+    private List<SavedPOJO>notes = new ArrayList<>();
 
     @NonNull
     @Override
@@ -33,10 +32,16 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
         return new ViewHolder(v);
     }
 
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     public void onBindViewHolder(SavedAdapter.ViewHolder holder, int position) {
-        SavedMemes model = list.get(position);
-        Glide.with(holder.memeImg.getContext()).load(model.getImageURL()).listener(new RequestListener<Drawable>() {
+        SavedPOJO model = notes.get(position);
+        holder.share.setOnClickListener(v -> {
+            Intent i = new Intent(Intent.ACTION_SEND);
+            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme\n"+model.getLink());
+            v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
+        });
+        Glide.with(holder.memeImg.getContext()).load(model.getLink()).listener(new RequestListener<Drawable>() {
             @Override
             public boolean onLoadFailed(GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
                 holder.pb.setVisibility(View.GONE);
@@ -49,35 +54,32 @@ public class SavedAdapter extends RecyclerView.Adapter<SavedAdapter.ViewHolder> 
                 return false;
             }
         }).into(holder.memeImg);
-        holder.share.setOnClickListener(v -> {
-            Intent i = new Intent(Intent.ACTION_SEND);
-            i.setType("text/plain");i.putExtra(Intent.EXTRA_TEXT,"Checkout the meme\n"+model.getImageURL());
-            v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
-        });
-        holder.save.setOnClickListener(v -> {
-            MyDbHandler dbHandler = new MyDbHandler(v.getContext());
-            dbHandler.deleteTodo(model.getId());
-            holder.save.setImageResource(R.drawable.ic_baseline_bookmark_border_24);
-            v.getContext().startActivity(new Intent(v.getContext(),Saved.class));
-        });
+    }
+
+    @SuppressLint("NotifyDataSetChanged")
+    public void setNotes(List<SavedPOJO> notes) {
+        this.notes = notes;
+        notifyDataSetChanged();
+    }
+
+    public SavedPOJO getNoteAt(int position) {
+        return notes.get(position);
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        return notes.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         private final ImageView memeImg;
         private final ImageView share;
         private final ProgressBar pb;
-        private final ImageView save;
         public ViewHolder(View itemView) {
             super(itemView);
             memeImg = itemView.findViewById(R.id.memeImg);
             share = itemView.findViewById(R.id.share);
             pb = itemView.findViewById(R.id.progressBar);
-            save = itemView.findViewById(R.id.save);
         }
     }
 }

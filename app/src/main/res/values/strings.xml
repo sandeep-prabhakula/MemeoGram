@@ -34,4 +34,5 @@
     <string name="already_a_user">Already a User ?</string>
     <string name="loginSignUp">Login</string>
     <string name="reels">reels</string>
+    <string name="videoReel">videoReel</string>
 </resources>

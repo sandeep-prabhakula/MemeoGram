@@ -1,7 +1,7 @@
 package com.example.memeshare;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     int page = 0;
     int limit = 10;
     ProgressBar pb2;
+    @SuppressLint("NotifyDataSetChanged")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,14 +79,9 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "That's all the data..", Toast.LENGTH_SHORT).show();
             return;
         }
-//        ProgressDialog pd = new ProgressDialog(this);
-//        pd.setMessage("Loading...");
-//        pd.setCancelable(false);
-//        pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
-//                pd.dismiss();
                 pb2.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
@@ -98,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         }, error -> {
-//            pd.dismiss();
             pb2.setVisibility(View.GONE);
             if(error instanceof NetworkError){
                 new AlertDialog.Builder(this)

@@ -2,6 +2,7 @@ package com.example.memeshare;
 
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,10 +58,16 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
         holder.save.setOnClickListener(v -> {
-            MyDbHandler dbHandler = new MyDbHandler(v.getContext());
-            SavedMemes memes = new SavedMemes();
-            memes.setImageURL(model.getImgurl());
-            dbHandler.addTodo(memes);
+//            MyDbHandler dbHandler = new MyDbHandler(v.getContext());
+//            SavedMemes memes = new SavedMemes();
+//            memes.setImageURL(model.getImgurl());
+//            dbHandler.addTodo(memes);
+            SavedPOJO pojo = new SavedPOJO(model.getImgurl());
+            try{
+                Saved.noteViewModel.insert(pojo);
+            }catch(Exception e){
+                Log.d("memeogram",e.getMessage());
+            }
             holder.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
         });
 
