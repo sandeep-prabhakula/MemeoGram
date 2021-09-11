@@ -1,10 +1,10 @@
 package com.example.memeshare;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,36 +15,44 @@ import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 public class Saved extends AppCompatActivity {
     RecyclerView savedRecycler;
     public static SavedAdapter adapter;
-    ImageView home;
-    ImageView explore;
-    ImageView settings;
-    ImageView reels;
+    BottomNavigationView bottomNav;
     public static SavedViewModel noteViewModel;
+    @SuppressLint("NonConstantResourceId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_saved);
         savedRecycler = findViewById(R.id.savedRecycler);
-        home = findViewById(R.id.home);
-        explore = findViewById(R.id.explore);
-        settings = findViewById(R.id.settings);
-        reels = findViewById(R.id.reels);
-        settings.setOnClickListener(v -> startActivity(new Intent(Saved.this,Settings.class)));
-        home.setOnClickListener(v -> startActivity(new Intent(Saved.this,MainActivity.class)));
-        explore.setOnClickListener(v -> startActivity(new Intent(Saved.this,Explore.class)));
-        reels.setOnClickListener(v ->startActivity(new Intent(Saved.this,ReelsActivity.class)));
-//        MyDbHandler dbHandler = new MyDbHandler(this);
-//        list = dbHandler.getAllTodos();
+        bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.menuSaved);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menuExplore:
+                    startActivity(new Intent(Saved.this, Explore.class));
+                    return true;
+                case R.id.menuReels:
+                    startActivity(new Intent(Saved.this, ReelsActivity.class));
+                    return true;
+                case R.id.menuSettings:
+                    startActivity(new Intent(Saved.this,Settings.class));
+                    return true;
+                case R.id.menuHome:
+                    startActivity(new Intent(Saved.this,MainActivity.class));
+                    return true;
+            }
+            return false;
+        });
         savedRecycler.addItemDecoration(new DividerItemDecoration(savedRecycler.getContext(),DividerItemDecoration.VERTICAL));
         savedRecycler.setHasFixedSize(true);
         savedRecycler.setLayoutManager(new LinearLayoutManager(this));
         adapter = new SavedAdapter();
         savedRecycler.setAdapter(adapter);
         noteViewModel = new ViewModelProvider(this).get(SavedViewModel.class);
-        // update recyclerview
         noteViewModel.getAllNotes().observe(this, adapter::setNotes);
 
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,ItemTouchHelper.LEFT) {

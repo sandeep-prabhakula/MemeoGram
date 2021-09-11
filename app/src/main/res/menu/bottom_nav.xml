@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menuHome"
+        android:title="home"
+        android:icon="@drawable/ic_baseline_home_24"
+        app:iconTint="@color/white"
+        />
+    <item
+        android:id="@+id/menuExplore"
+        android:title="explore"
+        android:icon="@drawable/ic_baseline_explore_24"
+        app:iconTint="@color/white"
+        />
+    <item
+        android:id="@+id/menuReels"
+        android:title="reels"
+        android:icon="@drawable/ic_baseline_ondemand_video_24"
+        app:iconTint="@color/white"
+        />
+    <item
+        android:id="@+id/menuSaved"
+        android:title="saved"
+        android:icon="@drawable/ic_baseline_bookmark_border_24"
+        app:iconTint="@color/white"
+        />
+    <item
+        android:id="@+id/menuSettings"
+        android:title="settings"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:iconTint="@color/white"
+
+        />
+</menu>

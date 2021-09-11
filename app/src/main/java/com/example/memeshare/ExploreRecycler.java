@@ -1,11 +1,10 @@
 package com.example.memeshare;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -20,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -30,29 +30,39 @@ import java.util.List;
 
 public class ExploreRecycler extends AppCompatActivity {
     private final String meme_url = "https://meme-api.herokuapp.com/gimme/50";
-    ImageView explorerHome,explorerSaved;
     RecyclerView exploreRecycler;
     MemeAdapter adapter;
     List<MemeModel> list;
-    ImageView settings,reels;
     NestedScrollView nested;
     ProgressBar pb4;
     int page = 0;
     int limit = 10;
+    BottomNavigationView bottomNav;
+    @SuppressLint({"NonConstantResourceId", "NotifyDataSetChanged"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore_recycler);
-        explorerHome = findViewById(R.id.explorerHome);
-        explorerSaved = findViewById(R.id.explorerSaved);
-        exploreRecycler = findViewById(R.id.exploreRecyclerView);
         pb4 = findViewById(R.id.progressBar4);
-        settings = findViewById(R.id.explorerSettings);
-        reels = findViewById(R.id.reels);
-        settings.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,Settings.class)));
-        explorerHome.setOnClickListener(v -> startActivity(new Intent(ExploreRecycler.this,MainActivity.class)));
-        explorerSaved.setOnClickListener(v->startActivity(new Intent(ExploreRecycler.this,Saved.class)));
-        reels.setOnClickListener(v ->startActivity(new Intent(ExploreRecycler.this,ReelsActivity.class)));
+        bottomNav = findViewById(R.id.bottomNav);
+        bottomNav.setSelectedItemId(R.id.menuExplore);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menuHome:
+                    startActivity(new Intent(ExploreRecycler.this, MainActivity.class));
+                    return true;
+                case R.id.menuReels:
+                    startActivity(new Intent(ExploreRecycler.this, ReelsActivity.class));
+                    return true;
+                case R.id.menuSettings:
+                    startActivity(new Intent(ExploreRecycler.this,Settings.class));
+                    return true;
+                case R.id.menuSaved:
+                    startActivity(new Intent(ExploreRecycler.this,Saved.class));
+                    return true;
+            }
+            return false;
+        });
         nested = findViewById(R.id.nested);
         Bundle bundle = getIntent().getExtras();
         String imageURL = bundle.getString("imageURL");
@@ -78,14 +88,9 @@ public class ExploreRecycler extends AppCompatActivity {
             Toast.makeText(this, "You're all caught Up", Toast.LENGTH_SHORT).show();
             return;
         }
-//        ProgressDialog pd = new ProgressDialog(this);
-//        pd.setMessage("Loading...");
-//        pd.setCancelable(false);
-//        pd.show();
         RequestQueue rq = Volley.newRequestQueue(this);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
-//                pd.dismiss();
                 pb4.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
@@ -98,7 +103,6 @@ public class ExploreRecycler extends AppCompatActivity {
             }
 
         }, error -> {
-//            pd.dismiss();
             pb4.setVisibility(View.GONE);
             if(error instanceof NetworkError){
                 new AlertDialog.Builder(this)
@@ -115,6 +119,6 @@ public class ExploreRecycler extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(this,Explore.class));
     }
 }

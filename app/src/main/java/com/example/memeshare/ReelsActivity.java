@@ -1,5 +1,6 @@
 package com.example.memeshare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -55,6 +56,6 @@ public class ReelsActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(this,MainActivity.class));
     }
 }

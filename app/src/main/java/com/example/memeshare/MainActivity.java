@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -20,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,46 +35,55 @@ public class MainActivity extends AppCompatActivity {
     MemeAdapter adapter;
     List<MemeModel> list;
     NestedScrollView nest;
-    ImageView explore;
-    ImageView saved;
-    ImageView settings;
-    ImageView reels;
     int page = 0;
     int limit = 10;
     ProgressBar pb2;
-    @SuppressLint("NotifyDataSetChanged")
+    BottomNavigationView bottomNav;
+
+    @SuppressLint({"NotifyDataSetChanged", "NonConstantResourceId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Objects.requireNonNull(getSupportActionBar()).hide();
-        saved = findViewById(R.id.saved);
-        explore = findViewById(R.id.explore);
-        settings = findViewById(R.id.settings);
-        reels = findViewById(R.id.reels);
+        bottomNav = findViewById(R.id.bottomNav);
         pb2 = findViewById(R.id.progressBar2);
-        explore.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Explore.class)));
-        saved.setOnClickListener(v -> startActivity(new Intent(MainActivity.this,Saved.class)));
-        settings.setOnClickListener(v ->startActivity(new Intent(MainActivity.this,Settings.class)));
-        reels.setOnClickListener(v ->startActivity(new Intent(MainActivity.this,ReelsActivity.class)));
+        bottomNav.setSelectedItemId(R.id.menuHome);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menuExplore:
+                    startActivity(new Intent(MainActivity.this, Explore.class));
+                    return true;
+                case R.id.menuReels:
+                    startActivity(new Intent(MainActivity.this, ReelsActivity.class));
+                    return true;
+                case R.id.menuSettings:
+                    startActivity(new Intent(MainActivity.this,Settings.class));
+                    return true;
+                case R.id.menuSaved:
+                    startActivity(new Intent(MainActivity.this,Saved.class));
+                    return true;
+            }
+            return false;
+        });
         nest = findViewById(R.id.nested);
         memes = findViewById(R.id.memes);
         list = new ArrayList<>();
-        loadMeme(page,limit);
+        loadMeme(page, limit);
         nest.setOnScrollChangeListener((NestedScrollView.OnScrollChangeListener) (v, scrollX, scrollY, oldScrollX, oldScrollY) -> {
             if (scrollY == v.getChildAt(0).getMeasuredHeight() - v.getMeasuredHeight()) {
                 page++;
-                loadMeme(page,limit);
+                loadMeme(page, limit);
             }
         });
-        memes.addItemDecoration(new DividerItemDecoration(memes.getContext(),DividerItemDecoration.VERTICAL));
+        memes.addItemDecoration(new DividerItemDecoration(memes.getContext(), DividerItemDecoration.VERTICAL));
         memes.setHasFixedSize(true);
         memes.setLayoutManager(new LinearLayoutManager(this));
         adapter = new MemeAdapter(list);
         adapter.notifyDataSetChanged();
     }
 
-    private void loadMeme(int page,int limit) {
+    private void loadMeme(int page, int limit) {
         if (page > limit) {
             Toast.makeText(this, "That's all the data..", Toast.LENGTH_SHORT).show();
             return;
@@ -84,9 +93,9 @@ public class MainActivity extends AppCompatActivity {
             try {
                 pb2.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
-                for(int i=0;i<jsonArray.length();i++){
+                for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
-                    list.add(new MemeModel(obj.getString("url"),obj.getString("title")));
+                    list.add(new MemeModel(obj.getString("url"), obj.getString("title")));
                 }
                 memes.setAdapter(adapter);
             } catch (JSONException e) {
@@ -95,14 +104,14 @@ public class MainActivity extends AppCompatActivity {
 
         }, error -> {
             pb2.setVisibility(View.GONE);
-            if(error instanceof NetworkError){
+            if (error instanceof NetworkError) {
                 new AlertDialog.Builder(this)
-                .setIcon(R.drawable.ic_baseline_error_24)
-                .setTitle("No Internet Connection")
-                .setCancelable(false)
-                .setPositiveButton("OK", (dialog, which) -> onBackPressed())
-                .setMessage("please check your internet connection or make your wifi toggle switch on.")
-                .show();
+                        .setIcon(R.drawable.ic_baseline_error_24)
+                        .setTitle("No Internet Connection")
+                        .setCancelable(false)
+                        .setPositiveButton("OK", (dialog, which) -> onBackPressed())
+                        .setMessage("please check your internet connection or make your wifi toggle switch on.")
+                        .show();
             }
         });
         rq.add(jsonObjectRequest);
@@ -110,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent i =  new Intent(Intent.ACTION_MAIN);
+        Intent i = new Intent(Intent.ACTION_MAIN);
         i.addCategory(Intent.CATEGORY_HOME);
         i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(i);

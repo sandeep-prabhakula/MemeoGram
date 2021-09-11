@@ -18,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -31,27 +32,36 @@ public class Explore extends AppCompatActivity {
     List<ExploreModel> list;
     ExploreAdapter adapter;
     private final String meme_url = "https://meme-api.herokuapp.com/gimme/1050";
-    ImageView home;
-    ImageView saved;
-    ImageView settings;
-    ImageView reels;
     ProgressBar pb5;
-    @SuppressLint("NotifyDataSetChanged")
+    BottomNavigationView bottomNav;
+
+    @SuppressLint({"NotifyDataSetChanged", "NonConstantResourceId"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_explore);
         exploreMemes = findViewById(R.id.exploreMemes);
-        home = findViewById(R.id.home);
-        saved = findViewById(R.id.saved);
-        reels = findViewById(R.id.reels);
-        settings = findViewById(R.id.settings);
+        bottomNav = findViewById(R.id.bottomNav);
         pb5 = findViewById(R.id.progressBar5);
         list = new ArrayList<>();
-        settings.setOnClickListener(v -> startActivity(new Intent(Explore.this,Settings.class)));
-        home.setOnClickListener(v -> startActivity(new Intent(Explore.this,MainActivity.class)));
-        saved.setOnClickListener(v -> startActivity(new Intent(Explore.this,Saved.class)));
-        reels.setOnClickListener(v ->startActivity(new Intent(Explore.this,ReelsActivity.class)));
+        bottomNav.setSelectedItemId(R.id.menuExplore);
+        bottomNav.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menuHome:
+                    startActivity(new Intent(Explore.this, MainActivity.class));
+                    return true;
+                case R.id.menuReels:
+                    startActivity(new Intent(Explore.this, ReelsActivity.class));
+                    return true;
+                case R.id.menuSettings:
+                    startActivity(new Intent(Explore.this,Settings.class));
+                    return true;
+                case R.id.menuSaved:
+                    startActivity(new Intent(Explore.this,Saved.class));
+                    return true;
+            }
+            return false;
+        });
         exploreMemes.setLayoutManager(new StaggeredGridLayoutManager(3,LinearLayoutManager.VERTICAL));
         exploreMemes.setHasFixedSize(true);
         loadExploreMemes();
@@ -91,6 +101,6 @@ public class Explore extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        startActivity(new Intent(Explore.this,MainActivity.class));
     }
 }
