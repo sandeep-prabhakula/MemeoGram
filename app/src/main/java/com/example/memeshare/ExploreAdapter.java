@@ -31,12 +31,12 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ExploreModel model = list.get(position);
         Glide.with(holder.meme.getContext()).load(model.getImageURL()).into(holder.meme);
-        holder.singleMeme.setOnClickListener(v->{
-            Intent i = new Intent(v.getContext(),ExploreRecycler.class);
-            i.putExtra("imageURL",model.getImageURL());
-            i.putExtra("description",model.getDescription());
-            v.getContext().startActivity(i);
-        });
+//        holder.singleMeme.setOnClickListener(v->{
+//            Intent i = new Intent(v.getContext(),ExploreRecycler.class);
+//            i.putExtra("imageURL",model.getImageURL());
+//            i.putExtra("description",model.getDescription());
+//            v.getContext().startActivity(i);
+//        });
     }
 
     @Override

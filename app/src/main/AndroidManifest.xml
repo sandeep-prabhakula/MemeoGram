@@ -12,35 +12,15 @@
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MemeShare">
-        <activity android:name=".ReelsActivity"
-            android:screenOrientation="portrait"/>
         <activity
             android:name=".ResetPassword"
             android:label="Reset Password"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".Settings"
-            android:label="Settings"
-            android:parentActivityName=".MainActivity" />
-        <activity android:name=".Login" />
+        <activity android:name=".Login"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".SignUp"
             android:label="Sign Up"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".ExploreRecycler"
-            android:label="Explore"
-            android:parentActivityName=".Explore"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Explore"
-            android:label="Explore"
-            android:parentActivityName=".MainActivity"
-            android:screenOrientation="portrait" />
-        <activity
-            android:name=".Saved"
-            android:label="Saved"
-            android:parentActivityName=".MainActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".MainActivity"

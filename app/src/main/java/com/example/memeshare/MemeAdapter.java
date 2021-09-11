@@ -58,13 +58,9 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
             v.getContext().startActivity(Intent.createChooser(i,"choose an app"));
         });
         holder.save.setOnClickListener(v -> {
-//            MyDbHandler dbHandler = new MyDbHandler(v.getContext());
-//            SavedMemes memes = new SavedMemes();
-//            memes.setImageURL(model.getImgurl());
-//            dbHandler.addTodo(memes);
             SavedPOJO pojo = new SavedPOJO(model.getImgurl());
             try{
-                Saved.noteViewModel.insert(pojo);
+                SavedFragment.noteViewModel.insert(pojo);
             }catch(Exception e){
                 Log.d("memeogram",e.getMessage());
             }
