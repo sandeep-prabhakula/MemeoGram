@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -35,6 +36,7 @@ public class MainFragment extends Fragment {
     List<MemeModel>list;
     NestedScrollView nest;
     int page , limit;
+    ProgressBar mainFragmentPb;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -60,6 +62,7 @@ public class MainFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         memes = view.findViewById(R.id.memes);
+        mainFragmentPb = view.findViewById(R.id.mainFragmentPb);
         list = new ArrayList<>();
         loadMeme(page, limit);
         nest = view.findViewById(R.id.nested);
@@ -77,6 +80,7 @@ public class MainFragment extends Fragment {
     }
 
     private void loadMeme(int page, int limit) {
+
         if (page > limit) {
             Toast.makeText(getActivity(), "That's all the data..", Toast.LENGTH_SHORT).show();
             return;
@@ -84,6 +88,7 @@ public class MainFragment extends Fragment {
         RequestQueue rq = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
+                mainFragmentPb.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for (int i = 0; i < jsonArray.length(); i++) {
                     JSONObject obj = jsonArray.getJSONObject(i);
@@ -94,7 +99,10 @@ public class MainFragment extends Fragment {
                 e.printStackTrace();
             }
 
-        }, error -> Log.d("memeogram", error.toString()));
+        }, error -> {
+            mainFragmentPb.setVisibility(View.GONE);
+            Log.d("memeogram", error.toString());
+        });
         rq.add(jsonObjectRequest);
     }
 }

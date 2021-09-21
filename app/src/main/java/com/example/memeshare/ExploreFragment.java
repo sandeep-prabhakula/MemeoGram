@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.android.volley.NetworkError;
 import com.android.volley.Request;
@@ -32,6 +33,7 @@ public class ExploreFragment extends Fragment {
     RecyclerView staggeredGrid;
     List<ExploreModel>list;
     ExploreAdapter adapter;
+    ProgressBar explorePB;
     private final String meme_url = "https://meme-api.herokuapp.com/gimme/1050";
     public ExploreFragment() {
 
@@ -57,6 +59,7 @@ public class ExploreFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         staggeredGrid = view.findViewById(R.id.staggeredgrid);
+        explorePB = view.findViewById(R.id.explorePb);
         list = new ArrayList<>();
         staggeredGrid.setLayoutManager(new StaggeredGridLayoutManager(3, LinearLayoutManager.VERTICAL));
         staggeredGrid.setHasFixedSize(true);
@@ -69,6 +72,7 @@ public class ExploreFragment extends Fragment {
         RequestQueue rq = Volley.newRequestQueue(getActivity());
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
+                explorePB.setVisibility(View.GONE);
                 JSONArray jsonArray = response.getJSONArray("memes");
                 for(int i=0;i<jsonArray.length();i++){
                     JSONObject obj = jsonArray.getJSONObject(i);
@@ -80,7 +84,7 @@ public class ExploreFragment extends Fragment {
             }
 
         }, error -> {
-
+            explorePB.setVisibility(View.GONE);
         });
         rq.add(jsonObjectRequest);
     }

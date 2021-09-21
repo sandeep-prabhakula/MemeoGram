@@ -24,4 +24,11 @@
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
 
+    <ProgressBar
+        android:id="@+id/mainFragmentPb"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
 </FrameLayout>

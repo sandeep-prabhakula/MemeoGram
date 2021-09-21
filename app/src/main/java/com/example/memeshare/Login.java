@@ -16,6 +16,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -27,8 +28,8 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         Objects.requireNonNull(getSupportActionBar()).hide();
         setContentView(R.layout.activity_login);
-        EditText mail = findViewById(R.id.loginId);
-        EditText pass = findViewById(R.id.loginPassword);
+        TextInputEditText mail = findViewById(R.id.text_input_username);
+        TextInputEditText pass = findViewById(R.id.text_input_password);
         TextView forgot = findViewById(R.id.forgotPassword);
         forgot.setOnClickListener(v -> startActivity(new Intent(Login.this,ResetPassword.class)));
         Button login = findViewById(R.id.login);
