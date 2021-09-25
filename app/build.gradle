@@ -40,6 +40,7 @@ dependencies {
     implementation "androidx.room:room-runtime:$rootProject.roomVersion"
     implementation 'com.google.android.gms:play-services-auth:19.2.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation 'org.chromium.net:cronet-embedded:76.3809.111'
     annotationProcessor "androidx.room:room-compiler:$rootProject.roomVersion"
     androidTestImplementation "androidx.room:room-testing:$rootProject.roomVersion"
 

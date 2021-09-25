@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "744363372067",
+    "firebase_url": "https://memeogram-5ceec-default-rtdb.firebaseio.com",
+    "project_id": "memeogram-5ceec",
+    "storage_bucket": "memeogram-5ceec.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:744363372067:android:3005b7e526a6faa1338b96",
+        "android_client_info": {
+          "package_name": "com.example.memeshare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "744363372067-cedv3uq212krm85ohnphc6dfooheakc3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDryjjbAktWQRiT2tC8Pd4CJCGAWmE3Gyk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "744363372067-cedv3uq212krm85ohnphc6dfooheakc3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

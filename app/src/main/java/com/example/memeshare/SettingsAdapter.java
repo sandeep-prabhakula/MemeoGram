@@ -21,6 +21,7 @@ import java.util.List;
 
 public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHolder> {
     private final List<SettingModel> list;
+
     public SettingsAdapter(List<SettingModel> list) {
         this.list = list;
     }
@@ -28,7 +29,7 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.settings_layout,null,false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.settings_layout, null, false);
         return new ViewHolder(v);
     }
 
@@ -39,29 +40,31 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         holder.singleSetting.setOnClickListener(v -> {
             FirebaseAuth auth = FirebaseAuth.getInstance();
             FirebaseUser user = auth.getCurrentUser();
-            if(position==0){
-                v.getContext().startActivity(new Intent(v.getContext(),ResetPassword.class));
+            if (position == 0) {
+                v.getContext().startActivity(new Intent(v.getContext(), ResetPassword.class));
             }
-            if(position==1){
-                auth.signOut();
-                v.getContext().startActivity(new Intent(v.getContext(),Login.class));
+            if (position == 1) {
+                if (user != null) {
+                    auth.signOut();
+                }
+                v.getContext().startActivity(new Intent(v.getContext(), Login.class));
             }
-            if(position==2){
+            if (position == 2) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(v.getContext());
                 builder.setIcon(R.drawable.ic_baseline_error_24)
-                .setTitle("Delete Account")
-                .setMessage("Your data will be lost.")
-                .setNegativeButton("CANCEL",null)
-                .setPositiveButton("DELETE", (dialog, which) -> {
-                    AuthCredential ac = EmailAuthProvider.getCredential(user.getEmail(),"rohitman@45");
-                    user.reauthenticate(ac).addOnCompleteListener(task -> user.delete().addOnCompleteListener(task1 -> {
-                        if(task1.isSuccessful()){
-                            v.getContext().startActivity(new Intent(v.getContext(),Login.class));
-                            Toast.makeText(v.getContext(), "Account Deleted", Toast.LENGTH_SHORT).show();
-                        }
-                    }));
-                })
-                .show();
+                        .setTitle("Delete Account")
+                        .setMessage("Your data will be lost.")
+                        .setNegativeButton("CANCEL", null)
+                        .setPositiveButton("DELETE", (dialog, which) -> {
+                            AuthCredential ac = EmailAuthProvider.getCredential(user.getEmail(), "rohitman@45");
+                            user.reauthenticate(ac).addOnCompleteListener(task -> user.delete().addOnCompleteListener(task1 -> {
+                                if (task1.isSuccessful()) {
+                                    v.getContext().startActivity(new Intent(v.getContext(), Login.class));
+                                    Toast.makeText(v.getContext(), "Account Deleted", Toast.LENGTH_SHORT).show();
+                                }
+                            }));
+                        })
+                        .show();
             }
         });
     }
@@ -71,9 +74,10 @@ public class SettingsAdapter extends RecyclerView.Adapter<SettingsAdapter.ViewHo
         return list.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         private final TextView settingName;
         private final ConstraintLayout singleSetting;
+
         public ViewHolder(View itemView) {
             super(itemView);
             singleSetting = itemView.findViewById(R.id.singleSetting);
