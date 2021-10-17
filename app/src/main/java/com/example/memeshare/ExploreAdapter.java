@@ -1,6 +1,7 @@
 package com.example.memeshare;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -32,10 +34,12 @@ public class ExploreAdapter extends RecyclerView.Adapter<ExploreAdapter.ViewHold
         ExploreModel model = list.get(position);
         Glide.with(holder.meme.getContext()).load(model.getImageURL()).into(holder.meme);
 //        holder.singleMeme.setOnClickListener(v->{
-//            Intent i = new Intent(v.getContext(),ExploreRecycler.class);
-//            i.putExtra("imageURL",model.getImageURL());
-//            i.putExtra("description",model.getDescription());
-//            v.getContext().startActivity(i);
+//            Bundle bundle = new Bundle();
+//            bundle.putString("imgURL",model.getImageURL());
+//            bundle.putString("description",model.getDescription());
+//            FragmentTransaction menuHome = ((MainActivity)v.getContext()).getSupportFragmentManager().beginTransaction();
+//            menuHome.replace(R.id.frameLayout,MainFragment.newInstance());
+//            menuHome.commit();
 //        });
     }
 

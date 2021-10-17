@@ -30,7 +30,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainFragment extends Fragment {
-    private final String meme_url = "https://meme-api.herokuapp.com/gimme/50";
     RecyclerView memes;
     MemeAdapter adapter;
     List<MemeModel>list;
@@ -42,8 +41,7 @@ public class MainFragment extends Fragment {
     }
 
     public static MainFragment newInstance() {
-        MainFragment fragment = new MainFragment();
-        return fragment;
+        return new MainFragment();
     }
 
     @Override
@@ -85,7 +83,8 @@ public class MainFragment extends Fragment {
             Toast.makeText(getActivity(), "That's all the data..", Toast.LENGTH_SHORT).show();
             return;
         }
-        RequestQueue rq = Volley.newRequestQueue(getActivity());
+        RequestQueue rq = Volley.newRequestQueue(requireActivity());
+        String meme_url = "https://meme-api.herokuapp.com/gimme/50";
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, meme_url, null, response -> {
             try {
                 mainFragmentPb.setVisibility(View.GONE);

@@ -66,7 +66,6 @@ public class MemeAdapter extends RecyclerView.Adapter<MemeAdapter.ViewHolder> {
             }
             holder.save.setImageResource(R.drawable.ic_baseline_bookmark_24);
         });
-
     }
 
     @Override

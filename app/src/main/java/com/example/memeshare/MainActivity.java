@@ -3,6 +3,7 @@ package com.example.memeshare;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
                 startActivity(intent);
             })
-                    .setActionTextColor(R.color.white)
+                    .setActionTextColor(Color.rgb(255,255,255))
                     .show();
         }
     }
@@ -100,5 +101,6 @@ public class MainActivity extends AppCompatActivity {
             menuHome.replace(R.id.frameLayout,MainFragment.newInstance());
             menuHome.commit();
         }
+        bottomNav.setSelectedItemId(R.id.menuHome);
     }
 }
