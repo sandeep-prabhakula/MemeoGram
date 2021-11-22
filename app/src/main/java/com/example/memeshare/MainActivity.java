@@ -13,28 +13,28 @@ import android.widget.FrameLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.example.memeshare.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
 
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
-    BottomNavigationView bottomNav;
+    ActivityMainBinding binding;
     FrameLayout frameLayout;
-    @SuppressLint({"NotifyDataSetChanged", "NonConstantResourceId", "ResourceAsColor", "PrivateApi"})
+    @SuppressLint({ "NonConstantResourceId", "ResourceAsColor", "PrivateApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         Objects.requireNonNull(getSupportActionBar()).hide();
         frameLayout = findViewById(R.id.frameLayout);
         checkConnection();
-        bottomNav = findViewById(R.id.bottomNav);
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frameLayout,MainFragment.newInstance());
         ft.commit();
-        bottomNav.setSelectedItemId(R.id.menuHome);
-        bottomNav.setOnNavigationItemSelectedListener(item -> {
+        binding.bottomNav.setSelectedItemId(R.id.menuHome);
+        binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menuHome:
                     FragmentTransaction menuHome = getSupportFragmentManager().beginTransaction();
@@ -52,9 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     reelsFt.commit();
                     return true;
                 case R.id.menuSettings:
-                    FragmentTransaction settingFt = getSupportFragmentManager().beginTransaction();
-                    settingFt.replace(R.id.frameLayout,SettingsFragment.newInstance());
-                    settingFt.commit();
+                    new CustomBottomSheetDialog().show(getSupportFragmentManager(),"Dialog");
                     return true;
                 case R.id.menuSaved:
                     FragmentTransaction savedFt = getSupportFragmentManager().beginTransaction();
@@ -101,6 +99,6 @@ public class MainActivity extends AppCompatActivity {
             menuHome.replace(R.id.frameLayout,MainFragment.newInstance());
             menuHome.commit();
         }
-        bottomNav.setSelectedItemId(R.id.menuHome);
+        binding.bottomNav.setSelectedItemId(R.id.menuHome);
     }
 }

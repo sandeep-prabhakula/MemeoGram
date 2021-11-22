@@ -11,6 +11,8 @@
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/activity_saved.xml" value="0.13802083333333334" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/activity_settings.xml" value="0.13802083333333334" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/activity_splash_screen.xml" value="0.15364583333333334" />
+        <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/bottom_sheet_dialog_layout.xml" value="0.1546875" />
+        <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/dialog_layout.xml" value="0.1546875" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/explore_layout.xml" value="0.1" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/fragment_explore.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/fragment_main.xml" value="0.15364583333333334" />
@@ -23,6 +25,7 @@
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/saved_layout.xml" value="0.13854166666666667" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/menu/bottom_nav.xml" value="0.12129629629629629" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/menu/clear_menu.xml" value="0.15185185185185185" />
+        <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/menu/zoom_image_menu.xml" value="0.1546875" />
       </map>
     </option>
   </component>
