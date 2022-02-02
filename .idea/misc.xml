@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/drawable/bottom_sheet_bg.xml" value="0.1105" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/activity_explore.xml" value="0.15364583333333334" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/activity_explore_recycler.xml" value="0.13802083333333334" />
         <entry key="..\:/Users/prabh/AndroidStudioProjects/MemeShare/app/src/main/res/layout/activity_login.xml" value="0.13802083333333334" />

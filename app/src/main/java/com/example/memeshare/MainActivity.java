@@ -21,7 +21,8 @@ import java.util.Objects;
 public class MainActivity extends AppCompatActivity {
     ActivityMainBinding binding;
     FrameLayout frameLayout;
-    @SuppressLint({ "NonConstantResourceId", "ResourceAsColor", "PrivateApi"})
+
+    @SuppressLint({"NonConstantResourceId", "ResourceAsColor", "PrivateApi"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,34 +31,39 @@ public class MainActivity extends AppCompatActivity {
         Objects.requireNonNull(getSupportActionBar()).hide();
         frameLayout = findViewById(R.id.frameLayout);
         checkConnection();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.frameLayout,MainFragment.newInstance());
-        ft.commit();
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.frameLayout, MainFragment.newInstance())
+                .addToBackStack(null)
+                .commit();
         binding.bottomNav.setSelectedItemId(R.id.menuHome);
         binding.bottomNav.setOnNavigationItemSelectedListener(item -> {
             switch (item.getItemId()) {
                 case R.id.menuHome:
-                    FragmentTransaction menuHome = getSupportFragmentManager().beginTransaction();
-                    menuHome.replace(R.id.frameLayout,MainFragment.newInstance());
-                    menuHome.commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frameLayout, MainFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
                     return true;
                 case R.id.menuExplore:
-                    FragmentTransaction exploreFt = getSupportFragmentManager().beginTransaction();
-                    exploreFt.replace(R.id.frameLayout,ExploreFragment.newInstance());
-                    exploreFt.commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frameLayout, ExploreFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
                     return true;
                 case R.id.menuReels:
-                    FragmentTransaction reelsFt = getSupportFragmentManager().beginTransaction();
-                    reelsFt.replace(R.id.frameLayout,ReelsFragment.newInstance());
-                    reelsFt.commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frameLayout, ReelsFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
                     return true;
                 case R.id.menuSettings:
-                    new CustomBottomSheetDialog().show(getSupportFragmentManager(),"Dialog");
+                    new CustomBottomSheetDialog().show(getSupportFragmentManager(), "Dialog");
                     return true;
                 case R.id.menuSaved:
-                    FragmentTransaction savedFt = getSupportFragmentManager().beginTransaction();
-                    savedFt.replace(R.id.frameLayout,SavedFragment.newInstance());
-                    savedFt.commit();
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.frameLayout, SavedFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit();
                     return true;
             }
             return false;
@@ -66,12 +72,12 @@ public class MainActivity extends AppCompatActivity {
 
     @SuppressLint("ResourceAsColor")
     private void checkConnection() {
-        if(!isNetworkConnected()){
-            Snackbar.make(frameLayout,"No internet connection",Snackbar.LENGTH_LONG).setAction("CONNECT", v -> {
+        if (!isNetworkConnected()) {
+            Snackbar.make(frameLayout, "No internet connection", Snackbar.LENGTH_LONG).setAction("CONNECT", v -> {
                 Intent intent = new Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS);
                 startActivity(intent);
             })
-                    .setActionTextColor(Color.rgb(255,255,255))
+                    .setActionTextColor(Color.rgb(255, 255, 255))
                     .show();
         }
     }
@@ -83,20 +89,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onBackPressed() {
-        Intent i = new Intent(Intent.ACTION_MAIN);
-        i.addCategory(Intent.CATEGORY_HOME);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(i);
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         checkConnection();
-        if(isNetworkConnected()){
+        if (isNetworkConnected()) {
             FragmentTransaction menuHome = getSupportFragmentManager().beginTransaction();
-            menuHome.replace(R.id.frameLayout,MainFragment.newInstance());
+            menuHome.replace(R.id.frameLayout, MainFragment.newInstance());
             menuHome.commit();
         }
         binding.bottomNav.setSelectedItemId(R.id.menuHome);
